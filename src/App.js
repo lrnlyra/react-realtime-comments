@@ -22,6 +22,12 @@ class App extends Component {
 }
 
 class CommentBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
   render() {
     return (
       <div>
