@@ -1,0 +1,12 @@
+[
+ {
+   id: 1,
+   author: "John Doe",
+   text: "Ola que tal"
+ },
+ {
+   id: 2,
+   author: "Jane Doe",
+   text: "Muy bien"
+ }
+]
