@@ -15,19 +15,13 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h3>Welcome to React</h3>
         </div>
-        <CommentBox data={data} />
+        <CommentBox data={data} pollInterval={2000} />
       </div>
     );
   }
 }
 
 class CommentBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: []
-    };
-  }
   render() {
     return (
       <div>
@@ -66,9 +60,39 @@ class Comment extends Component {
 }
 
 class CommentForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      author: '',
+      content: ''
+    }
+  }
+  onAuthorChange(e) {
+    this.setState({author: e.target.value})
+  }
+  onContentChange(e) {
+    this.setState({content: e.target.value})
+  }
   render() {
     return (
-      <h3>Write a comment :</h3>
+      <div>
+        <h3>Write a comment :</h3>
+        <form className="commentForm">
+          <input
+            type="text"
+            placeholder="Your name"
+            value={this.state.author}
+            onChange={this.onAuthorChange.bind(this)}
+          />
+          <input
+            type="text"
+            placeholder="Your comment"
+            value={this.state.content}
+            onChange={this.onContentChange.bind(this)}
+          />
+          <input type="submit" value="Post" />
+        </form>
+      </div>
     );
   }
 }
