@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
 let data = [
   {id: 1, author: "John Doe", text: "Ola que tal"},
   {id: 2, author: "Jane Doe", text: "Muy bien"}
-];
+]
 
 class App extends Component {
   render() {
@@ -17,30 +17,41 @@ class App extends Component {
         </div>
         <CommentBox data={data} pollInterval={2000} />
       </div>
-    );
+    )
   }
 }
 
 class CommentBox extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      render: false
+    }
+  }
+  onCommentSubmit = comment => {
+    data.push(comment)
+    this.setState({render: true})
+    console.log(data)
+  }
   render() {
     return (
       <div>
-        <CommentForm />
+        <CommentForm onCommentSubmit={this.onCommentSubmit} />
         <CommentList data={this.props.data} />
       </div>
-    );
+    )
   }
 }
 
 class CommentList extends Component {
   render() {
-    let commentNodes = this.props.data.map(comment => <Comment author={comment.author} key={comment.id}> {comment.text} </Comment>);
+    let commentNodes = this.props.data.map(comment => <Comment author={comment.author} key={comment.id}> {comment.text} </Comment>)
     return (
       <div className="comment-list">
         <h3>Published comments :</h3>
         {commentNodes}
       </div>
-    );
+    )
   }
 }
 
@@ -51,11 +62,11 @@ class Comment extends Component {
         <span className="comment-author">
           {this.props.author} :
         </span>
-        <span className="comment-content">
+        <span className="comment-text">
           {this.props.children}
         </span>
       </div>
-    );
+    )
   }
 }
 
@@ -64,37 +75,41 @@ class CommentForm extends Component {
     super(props);
     this.state = {
       author: '',
-      content: ''
+      text: ''
     }
   }
-  onAuthorChange(e) {
-    this.setState({author: e.target.value})
+  onAuthorChange = e => this.setState({author: e.target.value})
+  onContentChange = e => this.setState({text: e.target.value})
+  onSendFormData = commentData => {
+    this.setState({author: '', text: ''})
+    this.props.onCommentSubmit(commentData);
   }
-  onContentChange(e) {
-    this.setState({content: e.target.value})
+  onFormSubmit = e => {
+    e.preventDefault();
+    (!this.state.text || !this.state.author) ? alert('Empty field(s) !') : this.onSendFormData({author: this.state.author, text: this.state.text})
   }
   render() {
     return (
       <div>
         <h3>Write a comment :</h3>
-        <form className="commentForm">
+        <form className="commentForm" onSubmit={this.onFormSubmit}>
           <input
             type="text"
             placeholder="Your name"
             value={this.state.author}
-            onChange={this.onAuthorChange.bind(this)}
+            onChange={this.onAuthorChange}
           />
           <input
             type="text"
             placeholder="Your comment"
-            value={this.state.content}
-            onChange={this.onContentChange.bind(this)}
+            value={this.state.text}
+            onChange={this.onContentChange}
           />
           <input type="submit" value="Post" />
         </form>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
