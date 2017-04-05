@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
+import logo from './logo.png'
 import './App.css'
 
 let data = [
@@ -11,10 +11,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h3>Welcome to React</h3>
-        </div>
+        <img src={logo} className="App-logo" alt="logo" />
         <CommentBox data={data} pollInterval={2000} />
       </div>
     )
