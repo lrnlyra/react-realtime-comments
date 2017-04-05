@@ -3,8 +3,8 @@ import logo from './logo.svg'
 import './App.css'
 
 let data = [
-  {id: 1, author: "John Doe", text: "Ola que tal"},
-  {id: 2, author: "Jane Doe", text: "Muy bien"}
+  {id: 2, author: "John Doe", text: "Ola que tal"},
+  {id: 1, author: "Jane Doe", text: "Muy bien"}
 ]
 
 class App extends Component {
@@ -29,9 +29,11 @@ class CommentBox extends Component {
     }
   }
   onCommentSubmit = comment => {
-    data.push(comment)
-    this.setState({render: true})
+    comment.id = data[0].id + 1;
+    data.unshift(comment)
     console.log(data)
+    // change state to render component (little hack)
+    this.setState({render: true})
   }
   render() {
     return (
